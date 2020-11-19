@@ -11,12 +11,13 @@ export default function Profile({ email, firebase }) {
   const usersRef = firestore.collection("Users");
 
   useEffect(() => {
-    usersRef.doc(email).onSnapshot((doc) =>
+    const unmount = usersRef.doc(email).onSnapshot((doc) =>
       setUserProfile({
         name: doc.data().name,
         image: doc.data().image_url,
       })
     );
+    return unmount;
   }, [userProfile, email, usersRef]);
 
   const onFileChange = (e) => {
